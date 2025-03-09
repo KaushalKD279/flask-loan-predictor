@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .btn-custom {
+            background-color: #ff8c00;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p> Debugging: {{ prediction }} </p>
+
+        <h2>📈 Prediction Result</h2>
+        <h3 style="color: {{ 'red' if 'High Risk' in prediction else 'green' }};">
+            {{ prediction }}
+        </h3>
+        
+
+        <canvas id="riskChart" width="400" height="400"></canvas>
+
+        <h4>Entered Details</h4>
+        <p><b>Loan Amount:</b> ${{ features.loan_amnt }}</p>
+        <p><b>Interest Rate:</b> {{ features.int_rate }}%</p>
+        <p><b>Annual Income:</b> ${{ features.annual_inc }}</p>
+        <p><b>DTI:</b> {{ features.dti }}%</p>
+        <p><b>FICO Score:</b> {{ features.fico_range_high }}</p>
+
+        <a href="/" class="btn btn-custom">Try Again</a>
+    </div>
+
+    <!-- ✅ Fixed: Jinja inside JavaScript -->
+    <script>
+        var lowRisk = parseInt("{{ 1 if 'Low Risk' in prediction else 0 }}");
+        var highRisk = parseInt("{{ 1 if 'High Risk' in prediction else 0 }}");
+
+        var ctx = document.getElementById('riskChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ["Low Risk ✅", "High Risk 🚨"],
+                datasets: [{
+                    data: [lowRisk, highRisk],
+                    backgroundColor: ["green", "red"]
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

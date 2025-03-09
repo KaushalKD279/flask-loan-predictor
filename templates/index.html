@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Default Predictor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .btn-custom {
+            background-color: #ff8c00;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #e07b00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h2>📊 Loan Default Predictor</h2>
+        <p>Enter details to predict loan default risk</p>
+        <form action="/predict" method="post">
+            <div class="mb-3">
+                <label for="loan_amnt" class="form-label">Loan Amount ($)</label>
+                <input type="number" name="loan_amnt" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="int_rate" class="form-label">Interest Rate (%)</label>
+                <input type="number" step="0.01" name="int_rate" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="annual_inc" class="form-label">Annual Income ($)</label>
+                <input type="number" name="annual_inc" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="dti" class="form-label">Debt-to-Income Ratio (%)</label>
+                <input type="number" step="0.01" name="dti" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="fico_range_high" class="form-label">FICO Score</label>
+                <input type="number" name="fico_range_high" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-custom w-100">Predict</button>
+        </form>
+    </div>
+</body>
+</html>
